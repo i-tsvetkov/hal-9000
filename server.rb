@@ -29,7 +29,7 @@ def speak(msg)
   `espeak -v bg -p 35 -s 140 '#{msg}'`
 end
 
-root = File.expand_path '~/github/hal-9000'
+root = File.expand_path '.'
 server = WEBrick::HTTPServer.new :Port => 8000, :DocumentRoot => root
 
 server.mount_proc '/hal' do |req, res|
