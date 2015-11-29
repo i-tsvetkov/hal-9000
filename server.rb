@@ -32,10 +32,12 @@ end
 root = File.expand_path '.'
 server = WEBrick::HTTPServer.new :Port => 8000, :DocumentRoot => root
 
+ab = AliceBot.new
+
 server.mount_proc '/hal' do |req, res|
   q = req.query['q']
   q = tr(:bg, :en, q)
-  ans = wa(q) || ddg(q) || cb(q) || "no data"
+  ans = wa(q) || ddg(q) || ab.talk(q) || cb(q) || "no data"
   ans = tr(:en, :bg, ans)
   res.body = ans
   speak(ans)
