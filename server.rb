@@ -1,6 +1,7 @@
 require 'webrick'
 require 'open-uri'
 require 'json'
+require './alicebot.rb'
 
 def tr(from, to, text)
   text = URI.escape(text)
