@@ -22,10 +22,6 @@ def duckduckgo(query)
   JSON.parse(open(url).read)['Answer'][/>([^>]+)<\/a>$/, 1]
 end
 
-def cleverbot(query)
-  `python cleverbot.py '#{query}'`
-end
-
 def speak(msg)
   `espeak -v bg -p 35 -s 140 '#{msg}'`
 end
@@ -38,12 +34,13 @@ ab = AliceBot.new
 server.mount_proc '/hal' do |req, res|
   q = req.query['q']
   q = tr(:bg, :en, q)
-  ans = wolfram_alpha(q) || duckduckgo(q) || ab.talk(q) || cleverbot(q) || "no data"
+  ans = wolfram_alpha(q) || duckduckgo(q) || ab.talk(q) || "no data"
   ans = tr(:en, :bg, ans)
   res.body = ans
   speak(ans)
 end
 
 trap 'INT' do server.shutdown end
+
 server.start
 
