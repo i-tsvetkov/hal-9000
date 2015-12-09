@@ -33,9 +33,9 @@ ab = AliceBot.new
 
 server.mount_proc '/hal' do |req, res|
   q = req.query['q']
-  q = tr(:bg, :en, q)
+  q = translate(:bg, :en, q)
   ans = wolfram_alpha(q) || duckduckgo(q) || ab.talk(q) || "no data"
-  ans = tr(:en, :bg, ans)
+  ans = translate(:en, :bg, ans)
   res.body = ans
   speak(ans)
 end
