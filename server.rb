@@ -23,7 +23,7 @@ def duckduckgo(query)
 end
 
 def speak(msg)
-  `espeak -v bg -p 35 -s 140 '#{msg}'`
+  `espeak --stdout -v bg -p 35 -s 140 '#{msg}' | oggenc -Q - -o espeak.ogg`
 end
 
 root = File.expand_path '.'
@@ -38,6 +38,11 @@ server.mount_proc '/hal' do |req, res|
   ans = translate(:en, :bg, ans)
   res.body = ans
   speak(ans)
+end
+
+server.mount_proc '/espeak.ogg' do |req, res|
+  res['Pragma'] = res['Cache-Control'] = 'no-cache'
+  res.body = File.read 'espeak.ogg'
 end
 
 trap 'INT' do server.shutdown end
