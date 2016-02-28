@@ -1,6 +1,7 @@
 require 'webrick'
 require 'open-uri'
 require 'json'
+require 'uri'
 require './alicebot.rb'
 
 def translate(from, to, text)
@@ -23,7 +24,8 @@ def duckduckgo(query)
 end
 
 def speak(msg)
-  `espeak --stdout -v bg -p 35 -s 140 '#{msg}' | oggenc -Q - -o espeak.ogg`
+  url = open("http://www.speakvolumes.eu/testsynth.php?content=#{URI.escape(msg)}&voice=irina&demo=1").read.strip
+  `curl -s '#{url}' -o espeak.ogg`
 end
 
 root = File.expand_path '.'
