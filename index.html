@@ -3,17 +3,53 @@
   <head><title>HAL 9000</title></head>
   <body>
     <style>
+      @import url(https://fonts.googleapis.com/css?family=Exo+2:400,600);
+
       * {
-        background:#111;
-        color:#EEE;
-        font-size: 42px;
-        font-family: sans-serif;
+        background: #212121;
+        color: #F5F5F5;
+        font-size: xx-large;
+        font-family: 'Exo 2', sans-serif;
+      }
+
+      body {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      #ans {
+        font-weight: bold;
+        color: #FFF;
+      }
+
+      #img {
+        background: transparent;
+        transition: filter 0.25s;
+        -webkit-transition: -webkit-filter 0.25s;
+      }
+
+      #img:hover:not(.active) {
+        filter: drop-shadow(0px 0px 16px red);
+        -webkit-filter: drop-shadow(0px 0px 16px red);
+      }
+
+      #img.active {
+        filter: drop-shadow(0px 0px 128px red);
+        -webkit-filter: drop-shadow(0px 0px 128px red);
+      }
+
+      hr#sep {
+        border-color: #424242;
+        visibility: hidden;
       }
     </style>
     <script src="hal.js"></script>
-    <center style="margin-top:12.5%">
-      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/HAL9000.svg/256px-HAL9000.svg.png">
+    <center>
+      <img id="img" src="256px-HAL9000.svg.png">
       <div id="res">HAL 9000</div>
+      <hr id="sep"/>
       <div id="ans"></div>
       <audio id="audio" src="" style="display:none"></audio>
     </center>
