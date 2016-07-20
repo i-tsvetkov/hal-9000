@@ -21,14 +21,15 @@ window.onload = function () {
       event.results[event.results.length-1][0].transcript;
     var xhr = new XMLHttpRequest();
     xhr.onload = function (e) {
-      ans.textContent = e.target.responseText;
+      json = JSON.parse(e.target.responseText);
+      ans.textContent = json.answer;
       sep.style.visibility = 'visible';
-      audio.src = 'espeak.ogg';
+      audio.src = json.audio;
       audio.load();
       audio.play();
     };
     xhr.open('GET',
-      'http://localhost:8000/hal?q='
+      '/hal?q='
       + encodeURIComponent(res.textContent));
     xhr.send();
   };

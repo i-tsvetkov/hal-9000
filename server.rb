@@ -24,8 +24,7 @@ def duckduckgo(query)
 end
 
 def speak(msg)
-  url = open("http://www.speakvolumes.eu/testsynth.php?content=#{URI.escape(msg)}&voice=irina&demo=1").read.strip
-  `curl -s '#{url}' -o espeak.ogg`
+  open("http://www.speakvolumes.eu/testsynth.php?content=#{URI.escape(msg)}&voice=irina&demo=1").read.strip
 end
 
 root = File.expand_path '.'
@@ -38,13 +37,7 @@ server.mount_proc '/hal' do |req, res|
   q = translate(:bg, :en, q)
   ans = wolfram_alpha(q) || duckduckgo(q) || ab.talk(q) || "no data"
   ans = translate(:en, :bg, ans)
-  res.body = ans
-  speak(ans)
-end
-
-server.mount_proc '/espeak.ogg' do |req, res|
-  res['Pragma'] = res['Cache-Control'] = 'no-cache'
-  res.body = File.read 'espeak.ogg'
+  res.body = { answer: ans, audio: speak(ans) }.to_json
 end
 
 trap 'INT' do server.shutdown end
