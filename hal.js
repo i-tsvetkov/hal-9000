@@ -24,6 +24,7 @@ window.onload = function () {
       json = JSON.parse(e.target.responseText);
       ans.textContent = json.answer;
       sep.style.visibility = 'visible';
+      sep.style.width = '100%';
       audio.src = json.audio;
       audio.load();
       audio.play();

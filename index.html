@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
-  <head><title>HAL 9000</title></head>
-  <body>
+  <head>
+    <meta charset="UTF-8">
+    <title>HAL 9000</title>
     <style>
       @import url(https://fonts.googleapis.com/css?family=Exo+2:400,600);
 
@@ -15,10 +16,14 @@
       }
 
       body {
-        height: 100vh;
+        min-height: 100vh;
         display: flex;
         flex-direction: column;
         justify-content: center;
+      }
+
+      #ans, #res {
+        margin: 0.5em;
       }
 
       #ans {
@@ -44,17 +49,28 @@
       }
 
       hr#sep {
+        transition: width 1.6s;
+        -webkit-transition: width 1.6s;
         border-color: #424242;
         visibility: hidden;
+        width: 0%;
+      }
+
+      #all {
+        max-width: 61.8%;
       }
     </style>
+  </head>
+  <body>
     <script src="hal.js"></script>
     <center>
-      <img id="img" src="256px-HAL9000.svg.png">
+    <div id="all">
+      <img id="img" src="256px-HAL9000.svg.png" alt="HAL 9000">
       <div id="res">HAL 9000</div>
       <hr id="sep"/>
       <div id="ans"></div>
       <audio id="audio" src="" style="display:none"></audio>
+    </div>
     </center>
   </body>
 </html>
