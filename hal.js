@@ -9,6 +9,17 @@ window.onload = function () {
   var img = document.getElementById('img');
   var sep = document.getElementById('sep');
   var audio = document.getElementById('audio');
+  var typewriter = (node, text) => {
+    node.textContent = '';
+    var i = 0;
+    var interval = setInterval(
+      () => {
+        if (node.textContent === text)
+          clearInterval(interval);
+        else
+          node.textContent += text[i++];
+      }, 16);
+  };
 
   audio.onended = () => recognition.start();
   img.onclick   = () => recognition.start();
@@ -17,12 +28,11 @@ window.onload = function () {
   recognition.onend   = () => img.className = '';
 
   recognition.onresult = function(event) {
-    res.textContent =
-      event.results[event.results.length-1][0].transcript;
+    typewriter(res, event.results[event.results.length-1][0].transcript);
     var xhr = new XMLHttpRequest();
     xhr.onload = function (e) {
       json = JSON.parse(e.target.responseText);
-      ans.textContent = json.answer;
+      typewriter(ans, json.answer);
       sep.style.visibility = 'visible';
       sep.style.width = '100%';
       audio.src = json.audio;
