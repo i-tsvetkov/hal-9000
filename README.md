@@ -4,7 +4,9 @@ prototype of pseudo AI
 ## How to use it
 ### Dependencies
  * Web Speech API compatible browser
- * eSpeak
+ * Ability to speak Bulgarian,  
+   however if you don't speak bulgarian you could use the `--lang` flag  
+   example `ruby server.rb --lang <two-letter-country-code>`
 
 ### Example of use
 ```sh

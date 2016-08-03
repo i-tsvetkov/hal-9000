@@ -2,6 +2,7 @@ require 'webrick'
 require 'open-uri'
 require 'json'
 require 'uri'
+require 'erb'
 require './alicebot.rb'
 
 def translate(from, to, text)
@@ -31,12 +32,24 @@ root = File.expand_path '.'
 server = WEBrick::HTTPServer.new :Port => 8000, :DocumentRoot => root
 
 ab = AliceBot.new
+lang = :bg
+haljs = ERB.new File.read('hal.js')
+
+if ARGV.size == 2 && ARGV[0] == '--lang' && ARGV[1].match(/^[a-z]{2}$/i)
+  lang = ARGV[1]
+end
+
+server.mount_proc '/hal.js' do |req, res|
+  res['Pragma'] = res['Cache-Control'] = 'no-cache'
+  res.body = haljs.result binding
+end
 
 server.mount_proc '/hal' do |req, res|
   q = req.query['q']
-  q = translate(:bg, :en, q)
+  q = translate(lang, :en, q)
   ans = wolfram_alpha(q) || duckduckgo(q) || ab.talk(q) || "no data"
-  ans = translate(:en, :bg, ans)
+  ans = translate(:en, lang, ans)
+  res['Pragma'] = res['Cache-Control'] = 'no-cache'
   res.body = { answer: ans, audio: speak(ans) }.to_json
 end
 

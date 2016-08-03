@@ -2,7 +2,7 @@ window.onload = function () {
   var recognition = new webkitSpeechRecognition();
   recognition.continuous = false;
   recognition.interimResults = false;
-  recognition.lang = 'bg-BG';
+  recognition.lang = '<%= "#{lang.downcase}-#{lang.upcase}" %>';
 
   var res = document.getElementById('res');
   var ans = document.getElementById('ans');
