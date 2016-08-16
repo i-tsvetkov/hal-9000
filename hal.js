@@ -28,7 +28,8 @@ window.onload = function () {
   recognition.onend   = () => img.className = '';
 
   recognition.onresult = function(event) {
-    typewriter(res, event.results[event.results.length-1][0].transcript);
+    var result = event.results[event.results.length-1][0].transcript;
+    typewriter(res, result);
     var xhr = new XMLHttpRequest();
     xhr.onload = function (e) {
       json = JSON.parse(e.target.responseText);
@@ -41,7 +42,7 @@ window.onload = function () {
     };
     xhr.open('GET',
       '/hal?q='
-      + encodeURIComponent(res.textContent));
+      + encodeURIComponent(result));
     xhr.send();
   };
 
